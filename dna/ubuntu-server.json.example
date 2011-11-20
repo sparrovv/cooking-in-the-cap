@@ -1,0 +1,29 @@
+{
+  "run_list":["role[ubuntu-server]"],
+  "hostname":"master",
+  "app_user":"foo",
+  "domain":"foo.com",
+  "admin":"email@foo.com",
+
+  "mysql":{
+    "server_root_password": "foobar"
+  },
+
+  "god":{
+     "contacts" : {
+        "foo" : "foo@bar.com"
+     }
+   },
+
+  "apps": [
+    {"name":"fooapp", "servername": "foo.bar"}
+  ],
+
+  "default": {
+    "shorewall":  {
+      "interfaces": [
+        { "zone": "net", "interface":"eth0", "broadcast":"detect", "options": "tcpflags,nosmurfs,logmartians,routefilter"}
+      ]
+    }
+  }
+}

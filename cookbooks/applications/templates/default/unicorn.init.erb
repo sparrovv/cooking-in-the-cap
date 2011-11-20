@@ -1,0 +1,61 @@
+#!/bin/bash
+# Provides:		       unicorn_<%= @name %>
+# Required-Start:    $all
+# Required-Stop:     $network $local_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Unicorn Rack application server
+# Description:       Enable <%= @name %> at boot time.
+#
+
+# just to make sure we have the proper value
+export HOME=/home/<%= node[:app_user] %>
+
+# check for a pids file that will casue unicorn to fail
+# it's start up process, remove it if it is not a directory
+PIDS=/var/www/<%= @name %>/current/tmp/pids
+if [[ -e "$PIDS" && ! -d "$PIDS" ]]; then
+  rm "$PIDS"
+fi
+
+PID=<%= @pid %>
+
+old_pid="$PID.oldbin"
+
+sig () {
+	test -s "$PID" && kill -$1 `cat $PID`
+}
+
+oldsig () {
+	test -s $old_pid && kill -$1 `cat $old_pid`
+}
+
+case $1 in
+start)
+	sig 0 && echo >&2 "Already running" && exit 0
+  <%= @cmd %>
+	;;
+stop)
+	sig QUIT && exit 0
+	echo >&2 "Not running"
+	;;
+force-stop)
+	sig TERM && exit 0
+	echo >&2 "Not running"
+	;;
+restart|reload)
+	sig HUP && echo reloaded OK && exit 0
+	echo >&2 "Couldn't reload, starting instead"
+  <%= @cmd %>
+	;;
+upgrade)
+	sig USR2 && sleep 2 && sig 0 && oldsig QUIT && exit 0
+	echo >&2 "Couldn't upgrade, starting instead"
+  <%= @cmd %>
+	;;
+*)
+	echo >&2 "Usage: $0 <start|stop|restart|upgrade|force-stop>"
+	exit 1
+	;;
+esac
+

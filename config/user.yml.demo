@@ -1,0 +1,3 @@
+user_name: 'foo'
+password: 'bar'
+pub_key: 'ssh-rsa EAxs/AaMXJZvhTg1AtaQkOHKjqouZKl/f4OwABy3AFac+sfzs04eg7D5wlIaM/kpBN3dqt0vA9+afvv77+iFW8tw9y98aeu62D0FgwI1Ayyl+Fmh5tNIGbX4geuuutfHpCJzJtrY4P9ASGdYw/QacboPPD/epfW+5HaGja3XEdAZFLplSosxVBcs/5NR8aulOKl2x67/T+8wFWgrAdiPqMsehycrvcJuX5iBQP7GjFN8CrrNhAfs3v/FpDO0HmqhfzrycT/xxOB59kRMUUe+T079e5aPb8X1eNeYDsejNfzrYtQfTjnNrXg+KvP11SCa0w == fob@bar'
