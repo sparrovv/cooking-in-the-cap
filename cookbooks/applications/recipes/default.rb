@@ -37,7 +37,7 @@ node[:apps].each do |app|
       :name       => app[:name],
       :servername => app[:servername],
       :sock       => sock,
-      :root       => "/#{app_path}/current/public"
+      :root       => "#{app_path}/current/public"
     )
   end
 
