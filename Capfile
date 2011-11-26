@@ -77,7 +77,7 @@ namespace :chef do
 
   desc "Install Cookbook Repository from cwd"
   task :install_cookbook_repo, roles: :target do
-    sudo 'aptitude install -y rsync'
+    sudo 'apt-get install -y rsync'
     sudo "mkdir -m 0775 -p #{cookbook_dir}"
     sudo "chown #{config['user_name']} #{cookbook_dir}"
     reinstall_cookbook_repo
@@ -90,7 +90,7 @@ namespace :chef do
 
   desc "Install ./dna/*.json for specified node"
   task :install_dna, roles: :target do
-    sudo 'aptitude install -y rsync'
+    sudo 'apt-get install -y rsync'
     sudo "mkdir -m 0775 -p #{dna_dir}"
     sudo "chown #{config['user_name']} #{dna_dir}"
     put %Q(file_cache_path "#{cookbook_dir}"
@@ -132,11 +132,16 @@ namespace :chef do
     sudo "rm -rf #{dna_dir} #{cookbook_dir}"
     sudo_env 'gem uninstall -ax chef ohai'
   end
+
+  task :create_user do
+    add_user(config['user_name'], config['password'], config['user_name'], 'sudo', config['pub_key'])
+    
+  end
 end
 
 
 # helpers
-def create_user(user, pass, group, groups, pubkey)
+def add_user(user, pass, group, groups, pubkey)
   sudo "groupadd #{user}; exit 0"
   sudo "useradd -s /bin/bash -m -g #{group} -G #{groups},#{user} #{user}"
   # setting password by useradd doesn't work form, couldn't find the reason of that...
