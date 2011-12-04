@@ -2,6 +2,10 @@ include_recipe "nginx"
 
 package "libsqlite3-dev"
 
+# nokogiri dependencies
+package "libxslt-dev"
+package "libxml2-dev"
+
 node[:apps].each do |app|
 
   app_path = "/var/www/#{app[:name]}"
