@@ -1,0 +1,20 @@
+{
+  "run_list":["role[apps]"],
+  "hostname":"master",
+  "app_user":"foo",
+  "domain":"bar.com",
+  "admin":"foo@bar.com",
+
+  "god":{
+     "contacts" : {
+        "foo" : "foo@biz.com"
+     }
+   },
+
+  "apps": [
+    {"name":"fooapp", "servername": "fooapp.com"}
+  ],
+
+  "default": {
+  }
+}
